@@ -21,7 +21,7 @@ def check_one_string(s: str) -> bool:
     for one_divisor in divisors_generator(len(s)):
         if one_divisor == len(s):
             continue
-        str_chunks = list(batched(s, one_divisor, strict=True))
+        str_chunks = batched(s, one_divisor, strict=True)
         result = True
         for chunk1, chunk2 in pairwise(str_chunks):
             if chunk1 != chunk2:
@@ -43,6 +43,6 @@ for one_range in ranges:
         num_string = str(number)
         if check_one_string(num_string):
             sum += number
-            print(number)
+            # print(number)
 
 print(sum)
