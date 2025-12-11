@@ -1,0 +1,46 @@
+from pprint import pprint
+from re import finditer
+
+from AdventOfCode_2025_inputs.day_07_input import input_data
+
+input_data = """.......S.......
+...............
+.......^.......
+...............
+......^.^......
+...............
+.....^.^.^.....
+...............
+....^.^...^....
+...............
+...^.^...^.^...
+...............
+..^...^.....^..
+...............
+.^.^.^.^.^...^.
+...............
+"""
+
+splitters_array = input_data.splitlines()
+beams_set = set()
+beams_set.add(splitters_array[0].find("S"))
+number_of_timelines = 0
+
+for one_splitter_line in splitters_array:
+    splitters = finditer("\^", one_splitter_line)
+    splitters_set = {
+        match.start()
+        for match in splitters
+    }
+    beams_that_are_split = beams_set & splitters_set
+    # if len(beams_that_are_split) > 0:
+    #     number_of_timelines += len(beams_that_are_split)*2
+    beams_set = beams_set - beams_that_are_split
+    for one_split_beam in beams_that_are_split:
+        beams_set.add(one_split_beam - 1)
+        beams_set.add(one_split_beam + 1)
+    if len(beams_that_are_split) > 0:
+        number_of_timelines += len(beams_set)
+    pprint(beams_set)
+
+pprint(number_of_timelines)
